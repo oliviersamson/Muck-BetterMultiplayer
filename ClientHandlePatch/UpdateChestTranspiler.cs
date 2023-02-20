@@ -27,14 +27,10 @@ namespace BetterMultiplayer.ClientHandlePatch
             codeMatcher = codeMatcher.InsertAndAdvance(Transpilers.EmitDelegate<Action<int, int, int, int>>(
                 (chestId, cellId, itemId, amount) => {
 
-                    Plugin.Log.LogInfo($"chestId = {chestId}, cellId = {cellId}, itemId = {itemId}, amount = {amount}");
-
                     if (OtherInput.Instance.currentChest == null)
                     {
                         return;
                     }
-
-                    Plugin.Log.LogInfo($"craftingState = {OtherInput.Instance.craftingState}");
 
                     if (OtherInput.Instance.currentChest.id == chestId)
                     {

@@ -19,9 +19,6 @@ namespace BetterMultiplayer.ServerHandlePatch
                 new CodeMatch(OpCodes.Call));
             codeMatcher = codeMatcher.MatchForward(false, new CodeMatch(OpCodes.Ret));
 
-            Plugin.Log.LogInfo($"Opcode = {codeMatcher.InstructionAt(0)}");
-            Plugin.Log.LogInfo($"Opcode = {codeMatcher.InstructionAt(-1)}");
-
             // Load chestId, cellId, itemId and amount (local variables at index 0 to 3) into top of stack
             codeMatcher = codeMatcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc_0));
             codeMatcher = codeMatcher.InsertAndAdvance(new CodeInstruction(OpCodes.Ldloc_1));
@@ -31,14 +28,10 @@ namespace BetterMultiplayer.ServerHandlePatch
             codeMatcher = codeMatcher.InsertAndAdvance(Transpilers.EmitDelegate<Action<int, int, int, int>>(
                 (chestId, cellId, itemId, amount) => {
 
-                    Plugin.Log.LogInfo($"chestId = {chestId}, cellId = {cellId}, itemId = {itemId}, amount = {amount}");
-
                     if (OtherInput.Instance.currentChest == null)
                     {
                         return;
                     }
-
-                    Plugin.Log.LogInfo($"craftingState = {OtherInput.Instance.craftingState}");
 
                     if (OtherInput.Instance.currentChest.id == chestId)
                     {
