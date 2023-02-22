@@ -1,9 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using Steamworks.Data;
-using System.Collections.Generic;
-using UnityEngine.UI;
 
 namespace BetterMultiplayer
 {
@@ -12,15 +9,6 @@ namespace BetterMultiplayer
         public const string PLUGIN_GUID = "muck.mrboxxy.bettermultiplayer";
         public const string PLUGIN_NAME = "BetterMultiplayer";
         public const string PLUGIN_VERSION = "0.1.0";
-    }
-
-
-    public class LobbyData
-    {
-        public static LobbyData Instance;
-        public static Dictionary<string, List<Button>> Buttons;
-
-        public static Lobby LobbyBuffer;
     }
 
     [BepInPlugin(Globals.PLUGIN_GUID, Globals.PLUGIN_NAME, Globals.PLUGIN_VERSION)]
