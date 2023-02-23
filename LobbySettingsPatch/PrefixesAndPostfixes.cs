@@ -13,13 +13,39 @@ namespace BetterMultiplayer.LobbySettingsPatch
     {
         [HarmonyPatch(typeof(LobbySettings), "Start")]
         [HarmonyPrefix]
-        static void PatchStart(LobbySettings __instance)
+        static void PatchPreStart(LobbySettings __instance)
         {
             Plugin.Log.LogDebug($"Adding Muck's original UiSettings to LobbySettings' settings list.");
 
             __instance.GetSettings().Add(__instance.difficultySetting.name, __instance.difficultySetting);
             __instance.GetSettings().Add(__instance.friendlyFireSetting.name, __instance.friendlyFireSetting);
             __instance.GetSettings().Add(__instance.gamemodeSetting.name, __instance.gamemodeSetting);
+        }
+
+        [HarmonyPatch(typeof(LobbySettings), "Start")]
+        [HarmonyPostfix]
+        static void PatchPostStart(LobbySettings __instance)
+        {
+            Plugin.Log.LogDebug($"Setting callbacks to update lobby settings data through the buttons.");
+
+            foreach(KeyValuePair<string, UiSettings> uiSettings in __instance.GetSettings())
+            {
+                for (int i = 0; i < uiSettings.Value.GetButtons().Count; i++)
+                {
+                    string settingName = uiSettings.Key;
+                    int settingValue = i;
+
+                    uiSettings.Value.GetButtons()[i].onClick.AddListener(delegate ()
+                    {
+                        SteamManager.Instance.SetLobbySetting(settingName, settingValue);
+                    });
+                }
+            }
+
+            __instance.seed.onValueChanged.AddListener(delegate (string newSeed)
+            {
+                SteamManager.Instance.SetLobbySeed(newSeed);
+            });
         }
     }
 }

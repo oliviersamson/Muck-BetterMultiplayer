@@ -14,8 +14,6 @@ namespace BetterMultiplayer.LobbyVisualsPatch
         {
             bool isLobbyOwner = SteamManager.Instance.PlayerSteamId.Value == lobby.Owner.Id;
 
-            isLobbyOwner = false;
-
             LobbySettings.Instance.seed.interactable = isLobbyOwner;
 
             foreach (KeyValuePair<string, UiSettings> uiSettings in LobbySettings.Instance.GetSettings())
