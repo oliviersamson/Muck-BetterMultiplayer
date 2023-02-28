@@ -46,6 +46,9 @@ namespace BetterMultiplayer
 
             harmony.PatchAll(typeof(SteamManagerPatch.PrefixesAndPostfixes));
             Log.LogInfo("Patched SteamManager.Start()");
+
+            harmony.PatchAll(typeof(GameoverUIPatch.PrefixesAndPostfixes));
+            Log.LogInfo("Patched GameoverUI.Awake()");
         }
     }
 }
