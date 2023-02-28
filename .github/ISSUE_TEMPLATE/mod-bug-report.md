@@ -2,7 +2,7 @@
 name: Mod Bug report
 about: Create a report to describe a bug in the mod
 title: ''
-labels: ''
+labels: Bug in Mod
 assignees: ''
 
 ---
