@@ -36,6 +36,8 @@ namespace BetterMultiplayer.GameoverUIPatch
         [HarmonyPostfix]
         static void PatchStart(GameoverUI __instance)
         {
+            NetworkController.Instance.loading = false;
+
             GameObject header = GameObject.Find("Header");
             GameObject menuButton = GameObject.Find("MenuButton");
 
