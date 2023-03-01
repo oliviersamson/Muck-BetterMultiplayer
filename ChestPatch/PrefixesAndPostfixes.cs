@@ -10,7 +10,7 @@ namespace BetterMultiplayer.ChestPatch
         {
             __result = false;
 
-            Plugin.Log.LogInfo($"Chest.IsUsed overwriten");
+            Plugin.Log.LogDebug($"Chest.IsUsed overwriten");
 
             return false;
         }

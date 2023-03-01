@@ -65,16 +65,6 @@ namespace BetterMultiplayer.GameoverUIPatch
                 () => {
                     Plugin.Log.LogDebug("Returning to Lobby");
 
-                    if (LocalClient.serverOwner)
-                    {
-                        Debug.LogError("Host left game");
-                        //AccessTools.Method(typeof(GameManager), "HostLeftGame").Invoke(GameManager.instance, null);
-                    }
-                    else
-                    {
-                        //ClientSend.PlayerDisconnect();
-                    }
-
                     foreach (var clients in Server.clients)
                     {
                         if (clients.Value.player != null)
