@@ -49,6 +49,22 @@ namespace BetterMultiplayer
 
             harmony.PatchAll(typeof(GameoverUIPatch.PrefixesAndPostfixes));
             Log.LogInfo("Patched GameoverUI.Awake()");
+
+            harmony.PatchAll(typeof(MapPatch.PrefixesAndPostfixes));
+            Log.LogInfo("Patched Map.UpdateMap()");
+
+            harmony.PatchAll(typeof(GameManagerPatch.PrefixesAndPostfixes));
+            Log.LogInfo("Patched GameManager.KillPlayer()");
+            Log.LogInfo("Patched GameManager.RevivePlayer()");
+
+            harmony.PatchAll(typeof(PlayerStatusPatch.PrefixesAndPostfixes));
+            Log.LogInfo("Patched PlayerStatus.PlayerDied()");
+
+            harmony.PatchAll(typeof(PingControllerPatch.PrefixesAndPostfixes));
+            Log.LogInfo("Patched PingController.MakePing()");
+
+            harmony.PatchAll(typeof(PlayerPingPatch.PrefixesAndPostfixes));
+            Log.LogInfo("Patched PlayerPing.HidePing()");
         }
     }
 }
