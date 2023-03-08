@@ -35,6 +35,9 @@ namespace BetterMultiplayer
             harmony.PatchAll(typeof(ServerHandlePatch.UpdateChestTranspiler));
             Log.LogInfo("Patched ServerHandle.UpdateChest(int, Packet)");
 
+            harmony.PatchAll(typeof(ChestInteractPatch.PrefixesAndPostfixes));
+            Log.LogInfo("Patched ChestInteract.GetName()");
+
             harmony.PatchAll(typeof(LobbySettingsPatch.PrefixesAndPostfixes));
             Log.LogInfo("Patched LobbySettings.Start()");
 

@@ -43,28 +43,10 @@ namespace BetterMultiplayer.ClientHandlePatch
                             inventoryItem.Copy(ItemManager.Instance.allItems[itemId], amount);
                         }
 
-                        switch (OtherInput.Instance.craftingState)
+                        if (OtherInput.Instance.craftingState == OtherInput.CraftingState.Chest)
                         {
-                            case OtherInput.CraftingState.Chest:
-
-                                ((ChestUI)OtherInput.Instance.chest).cells[cellId].currentItem = inventoryItem;
-                                ((ChestUI)OtherInput.Instance.chest).cells[cellId].UpdateCell();
-
-                                break;
-
-                            case OtherInput.CraftingState.Cauldron:
-
-                                ((CauldronUI)OtherInput.Instance.cauldron).synchedCells[cellId].currentItem = inventoryItem;
-                                ((CauldronUI)OtherInput.Instance.cauldron).synchedCells[cellId].UpdateCell();
-
-                                break;
-
-                            case OtherInput.CraftingState.Furnace:
-
-                                ((FurnaceUI)OtherInput.Instance.cauldron).synchedCells[cellId].currentItem = inventoryItem;
-                                ((FurnaceUI)OtherInput.Instance.cauldron).synchedCells[cellId].UpdateCell();
-
-                                break;
+                            ((ChestUI)OtherInput.Instance.chest).cells[cellId].currentItem = inventoryItem;
+                            ((ChestUI)OtherInput.Instance.chest).cells[cellId].UpdateCell();
                         }
                     }
                 }));

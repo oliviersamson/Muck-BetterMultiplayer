@@ -15,3 +15,4 @@ TODO:
 - Add a "Back to Lobby" button in the pause menu
 - Fix "Invite friend(s)" button staying black after click
 - Add a way for a player to rejoin the game after a crash/disconnect
+- Add a way to whitelist the host's mods
