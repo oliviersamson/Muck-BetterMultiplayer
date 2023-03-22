@@ -1,18 +1,11 @@
 ﻿using HarmonyLib;
-using Steamworks;
 using Steamworks.Data;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BetterMultiplayer.GameoverUIPatch
 {
