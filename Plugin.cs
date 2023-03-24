@@ -30,10 +30,14 @@ namespace BetterMultiplayer
             Log.LogInfo("Patched Chest.IsUsed()");
 
             harmony.PatchAll(typeof(ClientHandlePatch.UpdateChestTranspiler));
+            harmony.PatchAll(typeof(ClientHandlePatch.PrefixesAndPostfixes));
             Log.LogInfo("Patched ClientHandle.UpdateChest(Packet)");
+            Log.LogInfo("Patched ClientHandle.OpenChest(Packet)");
 
             harmony.PatchAll(typeof(ServerHandlePatch.UpdateChestTranspiler));
-            Log.LogInfo("Patched ServerHandle.UpdateChest(int, Packet)");
+            harmony.PatchAll(typeof(ServerHandlePatch.PrefixesAndPostfixes));
+            Log.LogInfo("Patched ServerHandle.UpdateChest(int, Packet)");       
+            Log.LogInfo("Patched ServerHandle.RequestChest(int, Packet)");
 
             harmony.PatchAll(typeof(ChestInteractPatch.PrefixesAndPostfixes));
             Log.LogInfo("Patched ChestInteract.GetName()");
