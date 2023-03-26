@@ -8,7 +8,7 @@ namespace BetterMultiplayer
     {
         public const string PLUGIN_GUID = "muck.mrboxxy.bettermultiplayer";
         public const string PLUGIN_NAME = "BetterMultiplayer";
-        public const string PLUGIN_VERSION = "0.4.0";
+        public const string PLUGIN_VERSION = "0.5.0";
     }
 
     [BepInPlugin(Globals.PLUGIN_GUID, Globals.PLUGIN_NAME, Globals.PLUGIN_VERSION)]
