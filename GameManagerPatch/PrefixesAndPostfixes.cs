@@ -24,5 +24,12 @@ namespace BetterMultiplayer.GameManagerPatch
                 Map.Instance.PlayerDied(GameManager.players[id].username);
             }           
         }
+
+        [HarmonyPatch(typeof(GameManager), "Start")]
+        [HarmonyPrefix]
+        static void StartPrefix()
+        {
+            SteamManager.Instance.currentLobby.SetMemberData("game_state", "playing");
+        }
     }
 }

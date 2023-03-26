@@ -13,6 +13,7 @@ namespace BetterMultiplayer.SteamManagerPatch
             SteamMatchmaking.OnLobbyCreated += __instance.SetLobbySettings;
             SteamMatchmaking.OnLobbyEntered += __instance.UpdateLobbySettings;
             SteamMatchmaking.OnLobbyDataChanged += __instance.UpdateLobbySettings;
+            SteamMatchmaking.OnLobbyMemberDataChanged += __instance.UpdateMemberGameState;
         }
     }
 }

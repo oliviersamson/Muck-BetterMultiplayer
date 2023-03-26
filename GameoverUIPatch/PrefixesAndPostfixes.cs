@@ -11,19 +11,19 @@ namespace BetterMultiplayer.GameoverUIPatch
 {
     static class PrefixesAndPostfixes
     {
-        private static IEnumerator LoadLobby(Lobby currentLobby)
-        {          
-            var asyncLoadLevel = SceneManager.LoadSceneAsync("Menu");
-            while (!asyncLoadLevel.isDone)
-            {
-                Debug.Log("Loading Lobby");
-                yield return null;
-            }
+        //private static IEnumerator LoadLobby(Lobby currentLobby)
+        //{          
+        //    var asyncLoadLevel = SceneManager.LoadSceneAsync("Menu");
+        //    while (!asyncLoadLevel.isDone)
+        //    {
+        //        Debug.Log("Loading Lobby");
+        //        yield return null;
+        //    }
 
-            Plugin.Log.LogDebug("Joining Lobby");
-            LobbyVisuals.Instance.OpenLobby(currentLobby);
-            LoadingScreen.Instance.CancelInvoke("CheckAllPlayersLoading");
-        }
+        //    Plugin.Log.LogDebug("Joining Lobby");
+        //    LobbyVisuals.Instance.OpenLobby(currentLobby);
+        //    LoadingScreen.Instance.CancelInvoke("CheckAllPlayersLoading");
+        //}
 
         [HarmonyPatch(typeof(GameoverUI), "Awake")]
         [HarmonyPostfix]
@@ -56,23 +56,26 @@ namespace BetterMultiplayer.GameoverUIPatch
 
             returnToLobbyButton.onClick.AddListener(
                 () => {
-                    Plugin.Log.LogDebug("Returning to Lobby");
 
-                    foreach (var clients in Server.clients)
-                    {
-                        if (clients.Value.player != null)
-                        {
-                            clients.Value.StartClientSteam(clients.Value.player.username, new UnityEngine.Color(), clients.Value.player.steamId);
-                        }                       
-                    }
+                    SteamManager.Instance.ReturnToLobby();
 
-                    SteamManager.Instance.currentLobby.SetPublic();
-                    SteamManager.Instance.currentLobby.SetJoinable(true);
+                    //Plugin.Log.LogDebug("Returning to Lobby");
 
-                    AccessTools.Field(typeof(SteamLobby), "started").SetValue(SteamLobby.Instance, false);
-                    AccessTools.Field(typeof(SteamLobby), "currentLobby").SetValue(SteamLobby.Instance, SteamManager.Instance.currentLobby);
+                    //foreach (var clients in Server.clients)
+                    //{
+                    //    if (clients.Value.player != null)
+                    //    {
+                    //        clients.Value.StartClientSteam(clients.Value.player.username, new UnityEngine.Color(), clients.Value.player.steamId);
+                    //    }                       
+                    //}
 
-                    SteamLobby.Instance.StartCoroutine(LoadLobby(SteamManager.Instance.currentLobby));
+                    //SteamManager.Instance.currentLobby.SetPublic();
+                    //SteamManager.Instance.currentLobby.SetJoinable(true);
+
+                    //AccessTools.Field(typeof(SteamLobby), "started").SetValue(SteamLobby.Instance, false);
+                    //AccessTools.Field(typeof(SteamLobby), "currentLobby").SetValue(SteamLobby.Instance, SteamManager.Instance.currentLobby);
+
+                    //SteamLobby.Instance.StartCoroutine(LoadLobby(SteamManager.Instance.currentLobby));
                 });
         }
     }
