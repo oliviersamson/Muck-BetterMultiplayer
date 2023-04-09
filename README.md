@@ -21,4 +21,3 @@ Currently working functionalities:
 TODO:
 - Fix "Invite friend(s)" button staying black after click
 - Add a way to whitelist the host's mods
-- Add a way for the host to cancel going back to the lobby before the 3 seconds countdown is over

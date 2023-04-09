@@ -42,7 +42,7 @@ namespace BetterMultiplayer.LobbyVisualsPatch
         {
             GameObject lobbyID = GameObject.Find("LobbyID");
             RectTransform rectTransform = lobbyID.GetComponent<RectTransform>();
-            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y + 60f);
+            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y + 80f);
 
             GameObject menuButton = GameObject.Find("MenuButton");
             Button inviteFriend = UnityEngine.Object.Instantiate(menuButton.transform.GetParent().gameObject, lobbyID.transform).GetComponentInChildren<Button>();
