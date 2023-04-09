@@ -35,7 +35,6 @@ namespace BetterMultiplayer.UiCControllerPatch
                 button.onClick.AddListener(
                     () =>
                     {
-
                         if (GameManager.instance.GetPlayersInLobby() == 1)
                         {
                             SteamManager.Instance.SetGameStateToLobby();
@@ -46,9 +45,25 @@ namespace BetterMultiplayer.UiCControllerPatch
 
                         OtherInput.Instance.Unpause();
 
+                        Transform obj = Transform.Instantiate(Plugin.Overlay, Plugin.Overlay.position, Plugin.Overlay.rotation);
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+
                         IEnumerator coroutine = SteamManager.Instance.LobbyCountdown();
 
                         SteamManager.Instance.StartCoroutine(coroutine);
+
+                        obj.GetChild(0).GetChild(0).GetChild(1).GetComponent<Button>().onClick.AddListener(
+                            () => {
+                                SteamManager.Instance.StopCoroutine(coroutine);
+
+                                Cursor.visible = false;
+                                Cursor.lockState = CursorLockMode.Locked;
+
+                                button.interactable = true;
+
+                                GameObject.Destroy(obj.gameObject);
+                            });
                     });
             }
             else

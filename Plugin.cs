@@ -1,6 +1,9 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
+using System.Linq;
+using System.Reflection;
+using UnityEngine;
 
 namespace BetterMultiplayer
 {
@@ -17,12 +20,22 @@ namespace BetterMultiplayer
     {
         public static ManualLogSource Log;
 
+        public static AssetBundle Bundle;
+
+        public static Transform Overlay;
+
         public Harmony harmony;
 
         private void Awake()
         {
             // Plugin startup logic
             Log = base.Logger;
+
+            Bundle = GetAssetBundle("uiassets");
+            Overlay = Bundle.LoadAsset<GameObject>("ReturningLobby").GetComponent<Transform>();
+            Bundle.Unload(false);
+
+            Overlay.GetChild(0).GetChild(0).GetChild(1).gameObject.AddComponent<ButtonSfx>();
 
             harmony = new Harmony(Globals.PLUGIN_NAME);
 
@@ -76,6 +89,18 @@ namespace BetterMultiplayer
 
             harmony.PatchAll(typeof(UiCControllerPatch.PrefixesAndPostfixes));
             Log.LogInfo("Patched UiCController.Awake()");
+        }
+
+        public static AssetBundle GetAssetBundle(string name)
+        {
+            var execAssembly = Assembly.GetExecutingAssembly();
+
+            var resourceName = execAssembly.GetManifestResourceNames().Single(str => str.EndsWith(name));
+
+            using (var stream = execAssembly.GetManifestResourceStream(resourceName))
+            {
+                return AssetBundle.LoadFromStream(stream);
+            }
         }
     }
 }

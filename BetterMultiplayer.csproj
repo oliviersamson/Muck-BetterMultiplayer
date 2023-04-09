@@ -16,6 +16,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="uiassets" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Facepunch.Steamworks.Win64">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Muck\Muck_Data\Managed\Facepunch.Steamworks.Win64.dll</HintPath>
     </Reference>

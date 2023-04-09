@@ -1,30 +1,14 @@
 ﻿using HarmonyLib;
-using Steamworks.Data;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace BetterMultiplayer.GameoverUIPatch
 {
     static class PrefixesAndPostfixes
     {
-        //private static IEnumerator LoadLobby(Lobby currentLobby)
-        //{          
-        //    var asyncLoadLevel = SceneManager.LoadSceneAsync("Menu");
-        //    while (!asyncLoadLevel.isDone)
-        //    {
-        //        Debug.Log("Loading Lobby");
-        //        yield return null;
-        //    }
-
-        //    Plugin.Log.LogDebug("Joining Lobby");
-        //    LobbyVisuals.Instance.OpenLobby(currentLobby);
-        //    LoadingScreen.Instance.CancelInvoke("CheckAllPlayersLoading");
-        //}
-
         [HarmonyPatch(typeof(GameoverUI), "Awake")]
         [HarmonyPostfix]
         static void PatchStart(GameoverUI __instance)
@@ -54,29 +38,39 @@ namespace BetterMultiplayer.GameoverUIPatch
             RectTransform textRectTransform = __instance.nameText.GetComponent<RectTransform>();
             textRectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, 165f, textRectTransform.sizeDelta.x);
 
-            returnToLobbyButton.onClick.AddListener(
-                () => {
+            if (SteamManager.Instance.currentLobby.IsOwnedBy(SteamManager.Instance.PlayerSteamId))
+            {
+                returnToLobbyButton.onClick.AddListener(
+                    () => {
 
-                    SteamManager.Instance.ReturnToLobby();
+                        if (GameManager.instance.GetPlayersInLobby() == 1)
+                        {
+                            SteamManager.Instance.SetGameStateToLobby();
+                            return;
+                        }
 
-                    //Plugin.Log.LogDebug("Returning to Lobby");
+                        returnToLobbyButton.interactable = false;
 
-                    //foreach (var clients in Server.clients)
-                    //{
-                    //    if (clients.Value.player != null)
-                    //    {
-                    //        clients.Value.StartClientSteam(clients.Value.player.username, new UnityEngine.Color(), clients.Value.player.steamId);
-                    //    }                       
-                    //}
+                        Transform obj = Transform.Instantiate(Plugin.Overlay, Plugin.Overlay.position, Plugin.Overlay.rotation);
 
-                    //SteamManager.Instance.currentLobby.SetPublic();
-                    //SteamManager.Instance.currentLobby.SetJoinable(true);
+                        IEnumerator coroutine = SteamManager.Instance.LobbyCountdown();
 
-                    //AccessTools.Field(typeof(SteamLobby), "started").SetValue(SteamLobby.Instance, false);
-                    //AccessTools.Field(typeof(SteamLobby), "currentLobby").SetValue(SteamLobby.Instance, SteamManager.Instance.currentLobby);
+                        SteamManager.Instance.StartCoroutine(coroutine);
 
-                    //SteamLobby.Instance.StartCoroutine(LoadLobby(SteamManager.Instance.currentLobby));
-                });
+                        obj.GetChild(0).GetChild(0).GetChild(1).GetComponent<Button>().onClick.AddListener(
+                            () => {
+                                SteamManager.Instance.StopCoroutine(coroutine);
+
+                                returnToLobbyButton.interactable = true;
+
+                                GameObject.Destroy(obj.gameObject);
+                            });
+                    });
+            }
+            else
+            {
+                returnToLobbyButton.interactable = false;
+            }
         }
     }
 }
