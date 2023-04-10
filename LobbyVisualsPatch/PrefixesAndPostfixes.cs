@@ -59,6 +59,9 @@ namespace BetterMultiplayer.LobbyVisualsPatch
                     Plugin.Log.LogDebug("Inviting friends through steam overlay");
 
                     SteamManager.Instance.OpenFriendOverlayForGameInvite();
+                    
+                    AccessTools.Method(typeof(Button), "InstantClearState").Invoke(inviteFriend, null);
+                    AccessTools.Method(typeof(Button), "DoStateTransition").Invoke(inviteFriend, new object[] { 1, true });
                 });
         }
     }
